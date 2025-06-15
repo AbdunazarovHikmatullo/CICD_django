@@ -25,17 +25,17 @@ jobs:
 
             -   name: Запустить тесты
                 run :
-                    python3 manage.py test
+                    python manage.py test
             
             -   name: Применить миграции
                 run:
-                    python3 manage.py makemigrations
-                    python3 manage.py migrate
+                    python manage.py makemigrations
+                    python manage.py migrate
             
             -   name: Собрать статистику
                 run:
-                    python3 manage.py clollectstatic --noinput
+                    python manage.py clollectstatic --noinput
 
             -   name: Запустить сервер
                 run:
-                    python3 manage.py runserver
+                    python manage.py runserver
