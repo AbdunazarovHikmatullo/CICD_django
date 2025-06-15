@@ -30,8 +30,6 @@ jobs:
       - name: Применить миграции
         run: python manage.py migrate
 
-      - name: Собрать статику
-        run: python manage.py collectstatic --noinput
 
       - name: Запустить тесты
         run: python manage.py test
