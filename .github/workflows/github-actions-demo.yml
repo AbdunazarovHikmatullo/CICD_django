@@ -1,41 +1,37 @@
 name: Backend Django CI/CD 
-run-name: ${{ github.actor }} Запустил сборку
+run-name: ${{ github.actor }} запустил сборку
+
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Получить репозиторий
-              uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
 
-            -   name: Set up Python
-                uses: actions/setup-python@v4
-                with:
-                    python-version: '3.11'
-            - name: Установить зависимости
-              run: |
-                python -m pip install --upgrade pip
-                pip install -r requirements.txt
+    steps:
+      - name: Получить репозиторий
+        uses: actions/checkout@v3
 
-            -   name: Запустить тесты
-                run :
-                    python manage.py test
-            
-            -   name: Применить миграции
-                run:
-                    python manage.py makemigrations
-                    python manage.py migrate
-            
-            -   name: Собрать статистику
-                run:
-                    python manage.py clollectstatic --noinput
+      - name: Установить Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-            -   name: Запустить сервер
-                run:
-                    python manage.py runserver
+      - name: Установить зависимости
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Применить миграции
+        run: python manage.py migrate
+
+      - name: Собрать статику
+        run: python manage.py collectstatic --noinput
+
+      - name: Запустить тесты
+        run: python manage.py test
